@@ -303,6 +303,11 @@ if (AWSSDK_FIND_COMPONENTS)
     # AWS common runtime dependencies will be resolved automatically when doing find_package(aws-cpp-sdk-core) as well.
     list(REMOVE_ITEM AWSSDK_LINK_LIBRARIES ${AWSSDK_COMMON_RUNTIME_LIBS})
 
+    # !!! HACK FIX !!! This should not be merged. 
+    # But this appears to fix a ZLIB::ZLIB not found error when using AWS_SDK built as static libs (DBUILD_SHARED_LIBS=OFF)
+    # ZLIB appears to be mi
+    list(APPEND AWSSDK_LINK_LIBRARIES ZLIB)
+
     set(AWSSDK_TARGETS ${AWSSDK_LINK_LIBRARIES})
     list(REVERSE AWSSDK_TARGETS)
     foreach(TARGET IN LISTS AWSSDK_TARGETS)
